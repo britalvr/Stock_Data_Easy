@@ -1,0 +1,54 @@
+Sub StockData()
+
+' Declare ws as a worksheet object variable.
+Dim ws As Worksheet
+
+'Loop through all of the worksheets
+For Each ws In Worksheets
+'--------------------------------------
+
+    ' Create a variable
+    Dim total As Double
+    
+    ' Determine the last row
+    LastRow = ws.Range("A" & Rows.Count).End(xlUp).Row
+    
+    ' Set the row titles
+    ws.Range("I1").Value = "Ticker"
+    ws.Range("J1").Value = "Total Stock Volume"
+    
+    For i = 2 To LastRow
+    
+        ' If Ticker value changes then print results
+        If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
+        
+            ' Stores results in variable
+            total = total + ws.Cells(i, 7).Value
+            
+            ' Print Ticker symbol
+            ws.Range("I" & 2 + j).Value = ws.Cells(i, 1).Value
+            
+            ' Print Total
+            ws.Range("J" & 2 + j).Value = total
+            
+            ' Reset Total
+            total = 0
+            
+            ' Move to the next row
+            j = j + 1
+            
+        ' Else keep adding to the Total Volume
+        Else
+        
+            total = total + ws.Cells(i, 7).Value
+            
+        End If
+        
+    Next i
+    j = 0
+    
+Next ws
+
+     
+End Sub
+
